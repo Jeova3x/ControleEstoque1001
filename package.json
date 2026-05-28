@@ -1,0 +1,16 @@
+{
+  "name": "vercel-github-stock",
+  "version": "1.0.0",
+  "description": "Stock control using GitHub file as storage, for Vercel",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev",
+    "lint": "echo \"no linter configured\""
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
