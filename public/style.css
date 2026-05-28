@@ -1,0 +1,4 @@
+body { font-family: Arial, sans-serif; max-width:800px; margin:24px auto; padding:0 16px; }
+input { margin-right:8px; }
+#items li { margin:8px 0; }
+button { margin-left:6px; }
