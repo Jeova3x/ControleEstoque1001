@@ -1,7 +1,8 @@
-const fetch = global.fetch || require('node-fetch');
+const fetch = require('node-fetch');
 
-const GITHUB_OWNER = process.env.GITHUB_OWNER;
-const GITHUB_REPO = process.env.GITHUB_REPO;
+const repoFull = process.env.GITHUB_REPO || ''; // ex: "meu-usuario/meu-repo"
+const [GITHUB_OWNER, GITHUB_REPO] = repoFull.split('/');
+
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const FILE_PATH = 'stock.json';
 
