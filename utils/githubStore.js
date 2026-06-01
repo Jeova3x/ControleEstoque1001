@@ -1,14 +1,14 @@
 const fetch = require('node-fetch');
 
-const repoFull = process.env.GITHUB_REPO || ''; // ex: "meu-usuario/meu-repo"
-const [GITHUB_OWNER = '', GITHUB_REPO = ''] = repoFull.split('/');
+const repoFull = process.env.GITHUB_REPO || ''; // formato: "usuario/repositorio"
+const [REPO_USER = '', REPO_NAME = ''] = repoFull.split('/');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const FILE_PATH = process.env.FILE_PATH || 'stock.json';
 
 function ensureEnv() {
   if (!repoFull || repoFull.indexOf('/') === -1) {
-    throw new Error('Missing or invalid GITHUB_REPO (expected "owner/repo")');
+    throw new Error('Missing or invalid GITHUB_REPO (expected "usuario/repositorio")');
   }
   if (!GITHUB_TOKEN) {
     throw new Error('Missing GITHUB_TOKEN');
@@ -31,7 +31,7 @@ async function handleRes(res) {
 
 async function getFile(){
   ensureEnv();
-  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+  const url = `https://api.github.com/repos/${REPO_USER}/${REPO_NAME}/contents/${FILE_PATH}`;
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${GITHUB_TOKEN}`, Accept: 'application/vnd.github.v3+json' }
   });
@@ -52,7 +52,7 @@ async function readStock(){
 
 async function writeStock(items, sha, opts = {}) {
   ensureEnv();
-  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+  const url = `https://api.github.com/repos/${REPO_USER}/${REPO_NAME}/contents/${FILE_PATH}`;
   const content = Buffer.from(JSON.stringify(items, null, 2)).toString('base64');
   const body = { message: opts.message || 'update stock', content };
   if (sha) body.sha = sha;
