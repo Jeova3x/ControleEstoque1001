@@ -1,14 +1,17 @@
 const fetch = require('node-fetch');
 
 const repoFull = process.env.GITHUB_REPO || ''; // ex: "meu-usuario/meu-repo"
-const [GITHUB_OWNER, GITHUB_REPO] = repoFull.split('/');
+const [GITHUB_OWNER = '', GITHUB_REPO = ''] = repoFull.split('/');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const FILE_PATH = 'stock.json';
+const FILE_PATH = process.env.FILE_PATH || 'stock.json';
 
 function ensureEnv() {
-  if (!GITHUB_OWNER || !GITHUB_REPO || !GITHUB_TOKEN) {
-    throw new Error('Missing GITHUB_OWNER, GITHUB_REPO or GITHUB_TOKEN');
+  if (!repoFull || repoFull.indexOf('/') === -1) {
+    throw new Error('Missing or invalid GITHUB_REPO (expected "owner/repo")');
+  }
+  if (!GITHUB_TOKEN) {
+    throw new Error('Missing GITHUB_TOKEN');
   }
 }
 
